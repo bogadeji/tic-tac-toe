@@ -70,3 +70,24 @@ header h1 {
   align-self: start;
   font-size: 28px;
 }
+/* options */
+.game-options {
+  margin: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.separator {
+  font-size: 32px;
+  padding: 0 32px;
+  color: grey;
+}
+.game-options button {
+  background-color: rgb(12, 129, 51);
+  color: white;
+  border: 0;
+  font-family: inherit;
+  font-size: 24px;
+  width: 140px;
+  height: 50px;
+}
