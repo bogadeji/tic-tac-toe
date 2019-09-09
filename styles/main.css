@@ -1,0 +1,13 @@
+@font-face {
+  font-family: pix;
+  src: url('../fonts/PressStart2P.ttf');
+}
+body {
+  min-height: 100vh;
+  font-family: pix;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
