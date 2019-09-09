@@ -44,7 +44,8 @@
         <button class="button reset-game">Reset</button>
       </div>
     </div>
-    <div class="modal-wrapper">
+
+    <div class="modal-wrapper" style="display: none;">
       <div class="modal game-mode">
         <h2 class="title">Tic-Tac-Toe</h2>
         <div class="content">
@@ -53,6 +54,27 @@
         </div>
       </div>
     </div>
+
+    <div class="modal-wrapper" style="display: none;">
+      <div class="modal nicknames">
+        <h2 class="title">Nicknames</h2>
+        <div class="content">
+          <div class="element first-player-input">
+            <label for="first-player-nickname">1stPlayer</label>
+            <input type="text" id="first-player-nickname" />
+          </div>
+          <div class="element second-player-input">
+            <label for="second-player-nickname">2ndPlayer</label>
+            <input type="text" id="second-player-nickname" />
+          </div>
+          <div class="modal-options">
+            <button class="button back">Back</button>
+            <button class="button next">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="scripts/app.js"></script>
   </body>
 </html>

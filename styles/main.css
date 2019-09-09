@@ -101,7 +101,7 @@ header h1 {
 }
 .modal {
   margin: 10% auto;
-  width: 400px;
+  width: 600px;
   padding: 20px;
   border-radius: 10px;
   background-color: rgba(85, 47, 121, 0.7);
@@ -127,4 +127,42 @@ header h1 {
   margin: 20px 0;
   width: 320px;
   height: 80px;
+}
+/* nicknames modal */
+.modal.nicknames .content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal.nicknames .content .element {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.modal.nicknames .content .element label {
+  font-size: 24px;
+  color: white;
+}
+.modal.nicknames .content .element input {
+  font-family: inherit;
+  color: white;
+  background-color: blueviolet;
+  font-size: 24px;
+  padding: 0.4rem;
+  height: 40px;
+}
+.modal.nicknames .content .modal-options {
+  width: 50%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+.modal.nicknames .content .modal-options .button {
+  border: 0;
+  color: white;
+  background-color: rgb(13, 73, 68);
+  font-family: inherit;
+  font-size: 20px;
+  width: 100px;
 }
