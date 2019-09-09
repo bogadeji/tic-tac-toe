@@ -1,10 +1,10 @@
 @font-face {
-  font-family: pix;
-  src: url('../fonts/PressStart2P.ttf');
+  font-family: comic;
+  src: url('../fonts/ComicNeueSansID.ttf');
 }
 body {
   min-height: 100vh;
-  font-family: pix;
+  font-family: comic;
 }
 * {
   box-sizing: border-box;
@@ -20,5 +20,53 @@ header {
   background-color: black;
 }
 header h1 {
+  font-size: 60px;
   color: white;
+}
+/* game */
+.game-wrapper {
+  margin: 80px 10vw;
+  display: flex;
+  flex-direction: column;
+}
+
+/* game */
+.game {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  /* justify-content: space-between; */
+}
+
+.game-board {
+  display: grid;
+  gap: 4px 4px;
+  justify-content: center;
+  align-content: center;
+  grid-template: repeat(3, 100px) / repeat(3, 100px);
+}
+.board-wrapper {
+  background-color: black;
+  justify-self: center;
+  align-self: center;
+}
+.content-element {
+  background-color: white;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  font-size: 60px;
+}
+/* player info */
+.player-info {
+  display: grid;
+  justify-items: center;
+}
+.player-info h3 {
+  align-self: center;
+  font-size: 44px;
+}
+.player-info.first-pl h4,
+.player-info.second-pl h4 {
+  align-self: start;
+  font-size: 28px;
 }
