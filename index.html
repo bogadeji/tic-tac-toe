@@ -8,6 +8,88 @@
     <title>Tic-Tac-Toe</title>
   </head>
   <body>
+    <header>
+      <h1>X</h1>
+      <h1>Tic-Tac-Toe</h1>
+      <h1>O</h1>
+    </header>
+
+    <div class="game-wrapper">
+      <div class="game">
+        <div class="player-info first-pl">
+          <h3>1stPl</h3>
+          <h4 class="nick-name">Player1</h4>
+        </div>
+        <div class="board-wrapper">
+          <div class="game-board">
+            <div class="content-element"><span>X</span></div>
+            <div class="content-element"><span>X</span></div>
+            <div class="content-element"><span>O</span></div>
+            <div class="content-element"><span>O</span></div>
+            <div class="content-element"><span>O</span></div>
+            <div class="content-element"><span></span></div>
+            <div class="content-element"><span>X</span></div>
+            <div class="content-element"><span>O</span></div>
+            <div class="content-element"><span>O</span></div>
+          </div>
+        </div>
+        <div class="player-info second-pl">
+          <h3>2ndPl</h3>
+          <h4 class="nick-name">Player2</h4>
+        </div>
+      </div>
+      <div class="game-options">
+        <button class="button new-game">New Game</button>
+        <span class="separator">|</span>
+        <button class="button reset-game">Reset</button>
+      </div>
+    </div>
+
+    <div class="modal-wrapper" style="display: none;">
+      <div class="modal game-mode">
+        <h2 class="title">Tic-Tac-Toe</h2>
+        <div class="content">
+          <button class="button pvp-mode">Player vs Player</button>
+          <button class="button pve-mode">Player vs PC</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-wrapper" style="display: none;">
+      <div class="modal nicknames">
+        <h2 class="title">Nicknames</h2>
+        <div class="content">
+          <div class="element first-player-input">
+            <label for="first-player-nickname">1stPlayer</label>
+            <input type="text" id="first-player-nickname" />
+          </div>
+          <div class="element second-player-input">
+            <label for="second-player-nickname">2ndPlayer</label>
+            <input type="text" id="second-player-nickname" />
+          </div>
+          <div class="modal-options">
+            <button class="button back">Back</button>
+            <button class="button next">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-wrapper" style="display: none;">
+      <div class="modal game-over">
+        <h2 class="title">Game Over</h2>
+        <div class="content">
+          <h2 class="gg">
+            <span class="winner">1stPlayer</span> wins the game!
+          </h2>
+          <div class="modal-options">
+            <button class="button new-game">New Game</button>
+            <button class="button reset-game">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="scripts/app.js"></script>
   </body>
 </html>
