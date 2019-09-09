@@ -91,3 +91,40 @@ header h1 {
   width: 140px;
   height: 50px;
 }
+/* modal */
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+}
+.modal {
+  margin: 10% auto;
+  width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgba(85, 47, 121, 0.7);
+}
+.modal .title {
+  font-size: 60px;
+  color: white;
+  text-align: center;
+}
+/* game-mode modal */
+.modal.game-mode .content {
+  display: flex;
+  flex-direction: column;
+}
+.modal.game-mode .content .button {
+  border: 0;
+  border-radius: 5px;
+  background-color: rgb(52, 88, 88);
+  color: rgb(41, 207, 91);
+  font-family: inherit;
+  align-self: center;
+  font-size: 32px;
+  margin: 20px 0;
+  width: 320px;
+  height: 80px;
+}
