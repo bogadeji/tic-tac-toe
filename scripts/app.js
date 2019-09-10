@@ -9,6 +9,7 @@ const playerFactory = (nickname, choice) => {
 (() => {
   const gameMode = document.querySelector('.modal.game-mode');
   const nickNames = document.querySelector('.modal.nicknames');
+  const gameOver = document.querySelector('.modal.game-over');
   const game = document.querySelector('.game');
 
   let isPVE = false;
@@ -249,12 +250,16 @@ const playerFactory = (nickname, choice) => {
   nickNames.querySelector('.next').addEventListener('click', _startNewGame);
   // reset current game
   document.querySelectorAll('.new-game').forEach((newGameBtn) => {
-    newGameBtn.addEventListener('click', _startNewGame);
+    newGameBtn.addEventListener('click', () => {
+      _startNewGame();
+      _switchParentWrapper(gameOver, game);
+    });
   });
   // reset the game
   document.querySelectorAll('.reset-game').forEach((resetGameBtn) => {
-    resetGameBtn.addEventListener('click', () =>
-      _switchParentWrapper(game, gameMode)
-    );
+    resetGameBtn.addEventListener('click', () => {
+      _switchParentWrapper(gameOver, game);
+      _switchParentWrapper(game, gameMode);
+    });
   });
 })();
