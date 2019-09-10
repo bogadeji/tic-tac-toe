@@ -65,6 +65,7 @@ const playerFactory = (nickname, choice) => {
     // TODO
     const gameBoard = ((firstPlayer, secondPlayer) => {
       let board = ['', '', '', '', '', '', '', '', ''];
+      let winner = null;
 
       const firstPlCh = firstPlayer.getChoice();
       const secondPlCh = secondPlayer.getChoice();
@@ -76,6 +77,51 @@ const playerFactory = (nickname, choice) => {
           currentPlCh = secondPlCh;
         } else {
           currentPlCh = firstPlCh;
+        }
+      }
+
+      function hasWinner() {
+        if (winner) {
+          return true;
+        }
+        return false;
+      }
+
+      function getWinnerName() {
+        return winner;
+      }
+
+      function _checkForWinner() {
+        function _findW(condition) {
+          function _getVal(i1, i2, i3) {
+            return board[i1] + board[i2] + board[i3];
+          }
+          function _win(val) {
+            return val == condition;
+          }
+
+          if (
+            _win(_getVal(0, 1, 2)) ||
+            _win(_getVal(3, 4, 5)) ||
+            _win(_getVal(6, 7, 8)) ||
+            _win(_getVal(0, 3, 6)) ||
+            _win(_getVal(1, 4, 7)) ||
+            _win(_getVal(2, 5, 8)) ||
+            _win(_getVal(0, 4, 8)) ||
+            _win(_getVal(6, 4, 2))
+          ) {
+            return true;
+          }
+        }
+        const fc = 'XXX';
+        const sc = 'OOO';
+
+        if (_findW(fc)) {
+          winner = firstPlayer.getNickname();
+        } else if (_findW(sc)) {
+          winner = secondPlayer.getNickname();
+        } else if (!board.includes('')) {
+          winner = 'draw';
         }
       }
 
@@ -96,11 +142,20 @@ const playerFactory = (nickname, choice) => {
       function getValueOf(index) {
         return board[index];
       }
+
       function setValueOf(index) {
         board[index] = currentPlCh;
-        console.log(board);
+        _checkForWinner();
+        console.log(board); //for testing
       }
-      return { getValueOf, setValueOf, getCurrentPlayerCh, getNameOfPlayer };
+      return {
+        getValueOf,
+        setValueOf,
+        getCurrentPlayerCh,
+        getNameOfPlayer,
+        hasWinner,
+        getWinnerName
+      };
     })(firstPlayer, secondPlayer);
 
     const displayController = ((gb) => {
@@ -113,10 +168,23 @@ const playerFactory = (nickname, choice) => {
       }
 
       function _setPlayerChoice(element) {
+        function _endGame(w) {
+          const over = document.querySelector('.modal.game-over');
+          _switchParentWrapper(game, over);
+          over.querySelector('.winner').textContent = w;
+        }
+        function _playGame(s) {
+          s.textContent = gb.getCurrentPlayerCh();
+          gb.setValueOf(element.dataset.id);
+        }
+
         const span = element.querySelector('span');
         if (span.textContent == '') {
-          span.textContent = gb.getCurrentPlayerCh();
-          gb.setValueOf(element.dataset.id);
+          _playGame(span);
+
+          if (gb.hasWinner()) {
+            _endGame(gb.getWinnerName());
+          }
         }
       }
 
