@@ -50,7 +50,6 @@ const playerFactory = (nickname, choice) => {
 
         if (isPVE) {
           // make a pc bot
-          // TODO
           secondPl = ((player) => {
             const { getNickname, getChoice } = player;
             return { getNickname, getChoice };
@@ -79,6 +78,19 @@ const playerFactory = (nickname, choice) => {
         } else {
           currentPlCh = firstPlCh;
         }
+      }
+
+      function _playPC() {
+        function _getBestMove(newBD, pl) {
+          // return 1;
+        }
+        const index = _getBestMove();
+
+        return index;
+      }
+
+      function getPCMoveIndex() {
+        return _playPC();
       }
 
       function hasWinner() {
@@ -155,7 +167,8 @@ const playerFactory = (nickname, choice) => {
         getCurrentPlayerCh,
         getNameOfPlayer,
         hasWinner,
-        getWinnerName
+        getWinnerName,
+        getPCMoveIndex
       };
     })(firstPlayer, secondPlayer);
 
@@ -177,6 +190,18 @@ const playerFactory = (nickname, choice) => {
         function _playGame(s) {
           s.textContent = gb.getCurrentPlayerCh();
           gb.setValueOf(element.dataset.id);
+          if (isPVE) {
+            function _setPCMove(id) {
+              [...board.children].forEach((elm) => {
+                if (elm.dataset.id == id) {
+                  elm.firstElementChild.textContent = gb.getCurrentPlayerCh();
+                  gb.setValueOf(id);
+                }
+              });
+            }
+            const id = gb.getPCMoveIndex();
+            _setPCMove(id);
+          }
         }
 
         const span = element.querySelector('span');
