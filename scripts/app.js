@@ -91,105 +91,62 @@ const playerFactory = (nickname, choice) => {
             .split('');
         }
 
-        function _getBestMove(newBD, curPl, winPl, losePl, curIndex = -1) {
+        function _getBestMove(newBD, curPl) {
           const emptyBD = _getEmptySpots(newBD);
           let score = 0;
-          const moves = [];
 
           // check terminal state
           const winner = _checkForWinner(newBD);
           if (winner) {
-            if (winner == losePl.getNickname()) {
-              score = -10 * (emptyBD.length + 1);
-            } else if (winner == winPl.getNickname()) {
-              score = 10 * (emptyBD.length + 1);
+            if (winner == firstPlayer.getNickname()) {
+              score = -10;
+            } else if (winner == secondPlayer.getNickname()) {
+              score = 10;
             } else {
               score = 0;
             }
-
-            return { index: curIndex, score };
+            return { score };
           }
+
+          const moves = [];
 
           for (let i = 0; i < emptyBD.length; i++) {
             let nextBD = [...newBD];
             nextBD[emptyBD[i]] = curPl;
-            let bstMove = _getBestMove(
-              nextBD,
-              _nextPlayerCh(curPl),
-              winPl,
-              losePl,
-              emptyBD[i]
-            );
+            let bstMove = null;
+
+            if (curPl == 'O') {
+              bstMove = _getBestMove(nextBD, 'X');
+            } else {
+              bstMove = _getBestMove(nextBD, 'O');
+            }
 
             moves.push({ index: emptyBD[i], score: bstMove.score });
           }
 
           let bestMove = {};
-          // check for win move or draw
 
-          const winMoves = moves.filter((m) => m.score > 0);
-          const loseMoves = moves.filter((m) => m.score <= 0);
-
-          if (winMoves.length > 0) {
-            bestMove = winMoves.reduce((ac, prev) => {
-              if (ac.score < prev.score) {
-                ac = prev;
+          // for AI the highest
+          if (curPl == 'O') {
+            bestMove = moves.reduce((cur, prev) => {
+              if (cur.score < prev.score) {
+                cur = prev;
               }
-              return ac;
+              return cur;
             });
           } else {
-            bestMove = loseMoves.reduce((ac, prev) => {
-              if (prev.score > ac.score) {
-                ac = prev;
+            bestMove = moves.reduce((cur, prev) => {
+              if (cur.score > prev.score) {
+                cur = prev;
               }
-              return ac;
+              return cur;
             });
           }
 
           return bestMove;
         }
 
-        function _nextPlayerCh(pl = null) {
-          if (pl == secondPlCh) {
-            pl = firstPlCh;
-          } else {
-            pl = secondPlCh;
-          }
-          return pl;
-        }
-        if (board.join('').length > 1) {
-          const indexO = _getBestMove(
-            [...board],
-            'O',
-            secondPlayer,
-            firstPlayer
-          ).index;
-
-          const indexX = _getBestMove(
-            [...board],
-            'X',
-            firstPlayer,
-            secondPlayer
-          ).index;
-
-          const futureWinO = [...board];
-          const futureWinX = [...board];
-          futureWinO[indexO] = 'O';
-          futureWinX[indexX] = 'X';
-          if (_checkForWinner(futureWinO) == secondPlayer.getNickname()) {
-            return indexO;
-          } else if (_checkForWinner(futureWinX) == firstPlayer.getNickname()) {
-            return indexX;
-          } else {
-            return indexO;
-          }
-        } else {
-          if (board[4] != 'X') {
-            return 4;
-          } else {
-            return 0;
-          }
-        }
+        return _getBestMove([...board], 'O').index;
       }
 
       function getPCMoveIndex() {
