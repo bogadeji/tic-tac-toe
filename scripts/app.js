@@ -149,8 +149,6 @@ const playerFactory = (nickname, choice) => {
           return bestMove;
         }
 
-        // let currentPl = null;
-
         function _nextPlayerCh(pl = null) {
           if (pl == secondPlCh) {
             pl = firstPlCh;
