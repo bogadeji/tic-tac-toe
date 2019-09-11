@@ -62,7 +62,6 @@ const playerFactory = (nickname, choice) => {
     })();
 
     _switchParentWrapper(nickNames, game);
-    // TODO
     const gameBoard = ((firstPlayer, secondPlayer) => {
       let board = ['', '', '', '', '', '', '', '', ''];
       let winner = null;
@@ -81,12 +80,118 @@ const playerFactory = (nickname, choice) => {
       }
 
       function _playPC() {
-        function _getBestMove(newBD, pl) {
-          // return 1;
+        function _getEmptySpots(bd) {
+          return bd
+            .map((elm, i) => {
+              if (elm == '') {
+                return i;
+              }
+            })
+            .join('')
+            .split('');
         }
-        const index = _getBestMove();
 
-        return index;
+        function _getBestMove(newBD, curPl, winPl, losePl, curIndex = -1) {
+          const emptyBD = _getEmptySpots(newBD);
+          let score = 0;
+          const moves = [];
+
+          // check terminal state
+          const winner = _checkForWinner(newBD);
+          if (winner) {
+            if (winner == losePl.getNickname()) {
+              score = -10 * (emptyBD.length + 1);
+            } else if (winner == winPl.getNickname()) {
+              score = 10 * (emptyBD.length + 1);
+            } else {
+              score = 0;
+            }
+
+            return { index: curIndex, score };
+          }
+
+          for (let i = 0; i < emptyBD.length; i++) {
+            let nextBD = [...newBD];
+            nextBD[emptyBD[i]] = curPl;
+            let bstMove = _getBestMove(
+              nextBD,
+              _nextPlayerCh(curPl),
+              winPl,
+              losePl,
+              emptyBD[i]
+            );
+
+            moves.push({ index: emptyBD[i], score: bstMove.score });
+          }
+
+          let bestMove = {};
+          // check for win move or draw
+
+          const winMoves = moves.filter((m) => m.score > 0);
+          const loseMoves = moves.filter((m) => m.score <= 0);
+
+          if (winMoves.length > 0) {
+            bestMove = winMoves.reduce((ac, prev) => {
+              if (ac.score < prev.score) {
+                ac = prev;
+              }
+              return ac;
+            });
+          } else {
+            bestMove = loseMoves.reduce((ac, prev) => {
+              if (prev.score > ac.score) {
+                ac = prev;
+              }
+              return ac;
+            });
+          }
+
+          return bestMove;
+        }
+
+        // let currentPl = null;
+
+        function _nextPlayerCh(pl = null) {
+          if (pl == secondPlCh) {
+            pl = firstPlCh;
+          } else {
+            pl = secondPlCh;
+          }
+          return pl;
+        }
+        if (board.join('').length > 1) {
+          const indexO = _getBestMove(
+            [...board],
+            'O',
+            secondPlayer,
+            firstPlayer
+          ).index;
+
+          const indexX = _getBestMove(
+            [...board],
+            'X',
+            firstPlayer,
+            secondPlayer
+          ).index;
+
+          const futureWinO = [...board];
+          const futureWinX = [...board];
+          futureWinO[indexO] = 'O';
+          futureWinX[indexX] = 'X';
+          if (_checkForWinner(futureWinO) == secondPlayer.getNickname()) {
+            return indexO;
+          } else if (_checkForWinner(futureWinX) == firstPlayer.getNickname()) {
+            return indexX;
+          } else {
+            return indexO;
+          }
+        } else {
+          if (board[4] != 'X') {
+            return 4;
+          } else {
+            return 0;
+          }
+        }
       }
 
       function getPCMoveIndex() {
@@ -104,10 +209,10 @@ const playerFactory = (nickname, choice) => {
         return winner;
       }
 
-      function _checkForWinner() {
+      function _checkForWinner(bd) {
         function _findW(condition) {
           function _getVal(i1, i2, i3) {
-            return board[i1] + board[i2] + board[i3];
+            return bd[i1] + bd[i2] + bd[i3];
           }
           function _win(val) {
             return val == condition;
@@ -130,12 +235,13 @@ const playerFactory = (nickname, choice) => {
         const sc = 'OOO';
 
         if (_findW(fc)) {
-          winner = firstPlayer.getNickname();
+          return firstPlayer.getNickname();
         } else if (_findW(sc)) {
-          winner = secondPlayer.getNickname();
-        } else if (!board.includes('')) {
-          winner = 'draw';
+          return secondPlayer.getNickname();
+        } else if (!bd.includes('')) {
+          return 'draw';
         }
+        return null;
       }
 
       function getCurrentPlayerCh() {
@@ -158,8 +264,7 @@ const playerFactory = (nickname, choice) => {
 
       function setValueOf(index) {
         board[index] = currentPlCh;
-        _checkForWinner();
-        console.log(board); //for testing
+        winner = _checkForWinner(board);
       }
       return {
         getValueOf,
