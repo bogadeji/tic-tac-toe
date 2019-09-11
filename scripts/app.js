@@ -50,7 +50,6 @@ const playerFactory = (nickname, choice) => {
 
         if (isPVE) {
           // make a pc bot
-          // TODO
           secondPl = ((player) => {
             const { getNickname, getChoice } = player;
             return { getNickname, getChoice };
@@ -63,7 +62,6 @@ const playerFactory = (nickname, choice) => {
     })();
 
     _switchParentWrapper(nickNames, game);
-    // TODO
     const gameBoard = ((firstPlayer, secondPlayer) => {
       let board = ['', '', '', '', '', '', '', '', ''];
       let winner = null;
@@ -81,6 +79,80 @@ const playerFactory = (nickname, choice) => {
         }
       }
 
+      function _playPC() {
+        function _getEmptySpots(bd) {
+          return bd
+            .map((elm, i) => {
+              if (elm == '') {
+                return i;
+              }
+            })
+            .join('')
+            .split('');
+        }
+
+        function _getBestMove(newBD, curPl) {
+          const emptyBD = _getEmptySpots(newBD);
+          let score = 0;
+
+          // check terminal state
+          const winner = _checkForWinner(newBD);
+          if (winner) {
+            if (winner == firstPlayer.getNickname()) {
+              score = -10;
+            } else if (winner == secondPlayer.getNickname()) {
+              score = 10;
+            } else {
+              score = 0;
+            }
+            return { score };
+          }
+
+          const moves = [];
+
+          for (let i = 0; i < emptyBD.length; i++) {
+            let nextBD = [...newBD];
+            nextBD[emptyBD[i]] = curPl;
+            let bstMove = null;
+
+            if (curPl == 'O') {
+              bstMove = _getBestMove(nextBD, 'X');
+            } else {
+              bstMove = _getBestMove(nextBD, 'O');
+            }
+
+            moves.push({ index: emptyBD[i], score: bstMove.score });
+          }
+
+          let bestMove = {};
+
+          // for AI the highest
+          if (curPl == 'O') {
+            bestMove = moves.reduce((cur, prev) => {
+              if (cur.score < prev.score) {
+                cur = prev;
+              }
+              return cur;
+            });
+          } else {
+            bestMove = moves.reduce((cur, prev) => {
+              if (cur.score > prev.score) {
+                cur = prev;
+              }
+              return cur;
+            });
+          }
+
+          return bestMove;
+        }
+
+        return _getBestMove([...board], 'O').index;
+      }
+
+      function getPCMoveIndex() {
+        return _playPC();
+      }
+
       function hasWinner() {
         if (winner) {
           return true;
@@ -92,10 +164,10 @@ const playerFactory = (nickname, choice) => {
         return winner;
       }
 
-      function _checkForWinner() {
+      function _checkForWinner(bd) {
         function _findW(condition) {
           function _getVal(i1, i2, i3) {
-            return board[i1] + board[i2] + board[i3];
+            return bd[i1] + bd[i2] + bd[i3];
           }
           function _win(val) {
             return val == condition;
@@ -118,12 +190,13 @@ const playerFactory = (nickname, choice) => {
         const sc = 'OOO';
 
         if (_findW(fc)) {
-          winner = firstPlayer.getNickname();
+          return firstPlayer.getNickname();
         } else if (_findW(sc)) {
-          winner = secondPlayer.getNickname();
-        } else if (!board.includes('')) {
-          winner = 'draw';
+          return secondPlayer.getNickname();
+        } else if (!bd.includes('')) {
+          return 'draw';
         }
+        return null;
       }
 
       function getCurrentPlayerCh() {
@@ -146,8 +219,7 @@ const playerFactory = (nickname, choice) => {
 
       function setValueOf(index) {
         board[index] = currentPlCh;
-        _checkForWinner();
-        console.log(board); //for testing
+        winner = _checkForWinner(board);
       }
       return {
         getValueOf,
@@ -155,7 +227,8 @@ const playerFactory = (nickname, choice) => {
         getCurrentPlayerCh,
         getNameOfPlayer,
         hasWinner,
-        getWinnerName
+        getWinnerName,
+        getPCMoveIndex
       };
     })(firstPlayer, secondPlayer);
 
@@ -177,6 +250,18 @@ const playerFactory = (nickname, choice) => {
         function _playGame(s) {
           s.textContent = gb.getCurrentPlayerCh();
           gb.setValueOf(element.dataset.id);
+          if (isPVE) {
+            function _setPCMove(id) {
+              [...board.children].forEach((elm) => {
+                if (elm.dataset.id == id) {
+                  elm.firstElementChild.textContent = gb.getCurrentPlayerCh();
+                  gb.setValueOf(id);
+                }
+              });
+            }
+            const id = gb.getPCMoveIndex();
+            _setPCMove(id);
+          }
         }
 
         const span = element.querySelector('span');
