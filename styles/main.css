@@ -5,29 +5,43 @@
 body {
   min-height: 100vh;
   font-family: comic;
+  background-color: rgb(57, 32, 58);
 }
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
 /* header */
 header {
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black;
+  background-color: rgb(37, 9, 37);
 }
 header h1 {
   font-size: 60px;
-  color: white;
+  color: rgb(222, 213, 238);
+  text-shadow: 0px 10px black;
 }
+
 /* game */
 .game-wrapper {
   margin: 80px 10vw;
   display: flex;
   flex-direction: column;
+  animation: gameStart 1s;
+}
+
+@keyframes gameStart {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* game */
@@ -45,16 +59,29 @@ header h1 {
   grid-template: repeat(3, 100px) / repeat(3, 100px);
 }
 .board-wrapper {
-  background-color: black;
+  background-color: rgb(8, 61, 43);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 15px 15px rgb(22, 5, 22);
   justify-self: center;
   align-self: center;
 }
 .content-element {
-  background-color: white;
+  color: rgb(96, 130, 168);
+  text-shadow: 1px 2px rgb(0, 0, 0);
+  background: linear-gradient(rgb(52, 2, 65), rgb(4, 0, 5));
   display: grid;
   justify-content: center;
   align-content: center;
   font-size: 60px;
+  transition: 0.5s ease-in-out;
+}
+.content-element:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px 1px rgb(36, 6, 70);
+  background-color: rgb(74, 126, 209);
+  transition: 0.5s;
 }
 /* player info */
 .player-info {
@@ -62,13 +89,34 @@ header h1 {
   justify-items: center;
 }
 .player-info h3 {
+  text-shadow: 0 2px black;
+  color: rgb(122, 255, 211);
   align-self: center;
-  font-size: 44px;
+  font-size: 48px;
+}
+.player-info.first-pl,
+.player-info.second-pl {
+  border-radius: 20%;
+  border: 2px solid rgb(10, 99, 40);
+  box-shadow: 0 0 20px 10px rgb(22, 5, 22);
+  background-color: rgb(1, 71, 56);
+  transition: 1s;
 }
 .player-info.first-pl h4,
 .player-info.second-pl h4 {
   align-self: start;
   font-size: 28px;
+  text-shadow: 0 2px black;
+}
+.player-info.first-pl h4 {
+  color: rgb(60, 253, 76);
+}
+.player-info.second-pl h4 {
+  color: rgb(192, 97, 247);
+}
+.player-info.first-pl .ch,
+.player-info.second-pl .ch {
+  font-size: 80px;
 }
 /* options */
 .game-options {
@@ -86,47 +134,84 @@ header h1 {
   background-color: rgb(12, 129, 51);
   color: white;
   border: 0;
+  border-radius: 5px;
   font-family: inherit;
   font-size: 24px;
   width: 140px;
   height: 50px;
+  transition: 1s;
+}
+.game-options button:hover {
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 0 10px 1px rgb(36, 6, 70);
+  background-color: rgb(26, 153, 68);
+  border-radius: 20px;
 }
 /* modal */
 .modal-wrapper {
   position: fixed;
+  display: grid;
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: black;
+  background-color: rgb(43, 7, 44);
 }
 .modal {
-  margin: 10% auto;
   width: 600px;
+  height: 400px;
   padding: 20px;
+  align-self: start;
+  justify-self: center;
   border-radius: 10px;
+  border: 3px solid rgb(43, 7, 44);
   background-color: rgba(85, 47, 121, 0.7);
+  box-shadow: 0 0 1px 10px rgba(85, 62, 107, 0.7);
+  transform: translateY(10vh);
+  animation: opaAppear 0.5s;
 }
+
+@keyframes opaAppear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .modal .title {
   font-size: 60px;
   color: white;
   text-align: center;
+  text-shadow: 0px 10px black;
 }
 /* game-mode modal */
 .modal.game-mode .content {
   display: flex;
   flex-direction: column;
 }
+.pro {
+  text-align: center;
+  color: rgb(183, 137, 226);
+}
 .modal.game-mode .content .button {
   border: 0;
   border-radius: 5px;
   background-color: rgb(52, 88, 88);
-  color: rgb(41, 207, 91);
+  color: rgb(81, 218, 122);
   font-family: inherit;
   align-self: center;
   font-size: 32px;
   margin: 20px 0;
   width: 320px;
   height: 80px;
+  transition: 0.5s;
+}
+.modal.game-mode .content .button:hover {
+  background-color: rgba(86, 134, 134, 0.836);
+  color: rgb(187, 219, 245);
+  width: 340px;
 }
 /* nicknames modal */
 .modal.nicknames .content {
@@ -142,10 +227,12 @@ header h1 {
 }
 .modal.nicknames .content .element label {
   font-size: 24px;
+  text-shadow: 1px 1px rgb(0, 0, 0);
   color: white;
 }
 .modal.nicknames .content .element input {
   font-family: inherit;
+  border: 1px solid rgb(157, 74, 235);
   color: white;
   background-color: blueviolet;
   font-size: 24px;
@@ -153,7 +240,7 @@ header h1 {
   height: 40px;
 }
 .modal.nicknames .content .modal-options {
-  width: 50%;
+  width: 80%;
   height: 40px;
   display: flex;
   justify-content: space-between;
@@ -165,10 +252,17 @@ header h1 {
   font-family: inherit;
   font-size: 20px;
   width: 100px;
+  transition: 0.5s;
+}
+.modal.nicknames .content .modal-options .button:hover {
+  width: 120px;
+  background-color: rgb(27, 100, 94);
 }
 /* game over modal */
 .modal.game-over .content .gg {
+  padding: 5px;
   color: white;
+  text-shadow: 1px 1px black;
   word-break: break-all;
   text-align: center;
 }
@@ -182,9 +276,76 @@ header h1 {
   border: 0;
   color: white;
   font-family: inherit;
+  border-radius: 4px;
   background-color: blueviolet;
   font-size: 32px;
   margin: 10px;
   width: 200px;
   height: 60px;
+  transition: 0.5s;
+}
+.modal.game-over .content .modal-options .button:hover {
+  background-color: rgb(157, 74, 235);
+  width: 220px;
+}
+
+@media only screen and (max-width: 1180px) {
+  .player-info h3 {
+    font-size: 20px;
+  }
+  .player-info {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .game-wrapper {
+    margin: 0;
+    margin-top: 10vh;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .modal {
+    width: 320px;
+    height: 400px;
+  }
+  .player-info {
+    width: 60%;
+    margin: 0 auto;
+  }
+  .modal.game-mode .content .button {
+    font-size: 24px;
+    width: 200px;
+    height: 40px;
+  }
+  .modal.game-mode .content .button:hover {
+    width: 220px;
+  }
+  .modal.nicknames .content .element input {
+    width: 200px;
+    align-self: center;
+  }
+  .modal.nicknames .content .modal-options .button:hover {
+    width: 60px;
+  }
+  .game {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+  }
+  .player-info h3 {
+    font-size: 24px;
+  }
+  .player-info.first-pl .ch,
+  .player-info.second-pl .ch {
+    font-size: 75px;
+  }
+  .game-options button {
+    font-size: 16px;
+  }
+  .modal.game-over .content .modal-options .button {
+    font-size: 18px;
+    height: 32px;
+  }
+  header h1 {
+    font-size: 36px;
+  }
 }

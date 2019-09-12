@@ -245,16 +245,27 @@ const playerFactory = (nickname, choice) => {
         function _endGame(w) {
           const over = document.querySelector('.modal.game-over');
           _switchParentWrapper(game, over);
-          over.querySelector('.winner').textContent = w;
+          const winDisplay = over.querySelector('.gg');
+          if (w == 'draw') {
+            winDisplay.textContent = `The Game is a ${w}`;
+          } else {
+            winDisplay.textContent = `${w} wins The Game!`;
+          }
         }
         function _playGame(s) {
-          s.textContent = gb.getCurrentPlayerCh();
+          const curCh = gb.getCurrentPlayerCh();
+          s.textContent = curCh;
+          _setChColor(s, curCh);
+          _switchColorPanel(curCh);
           gb.setValueOf(element.dataset.id);
           if (isPVE) {
             function _setPCMove(id) {
               [...board.children].forEach((elm) => {
                 if (elm.dataset.id == id) {
-                  elm.firstElementChild.textContent = gb.getCurrentPlayerCh();
+                  const curCh = gb.getCurrentPlayerCh();
+                  elm.firstElementChild.textContent = curCh;
+                  _setChColor(elm.firstElementChild, curCh);
+                  _switchColorPanel(curCh);
                   gb.setValueOf(id);
                 }
               });
@@ -264,6 +275,24 @@ const playerFactory = (nickname, choice) => {
           }
         }
 
+        function _setChColor(span, ch) {
+          if (ch == 'X') {
+            span.style = 'color: rgb(60, 253, 76);';
+          } else {
+            span.style = 'color: rgb(192, 97, 247);';
+          }
+        }
+        function _switchColorPanel(ch) {
+          const fpl = document.querySelector('div.player-info.first-pl');
+          const spl = document.querySelector('div.player-info.second-pl');
+          if (ch == 'X') {
+            spl.style = 'background: rgb(103, 58, 183);';
+            fpl.style = '';
+          } else {
+            fpl.style = 'background: rgb(103, 58, 183);';
+            spl.style = '';
+          }
+        }
         const span = element.querySelector('span');
         if (span.textContent == '') {
           _playGame(span);
@@ -309,11 +338,17 @@ const playerFactory = (nickname, choice) => {
         _setClearGameHandler();
         board.addEventListener('click', _currentBoardHandler);
       }
+      function _setDefaultColorPanel() {
+        document.querySelector('div.player-info.first-pl').style =
+          'background: rgb(103, 58, 183);';
+        document.querySelector('div.player-info.second-pl').style = '';
+      }
 
       function renderNewGame() {
         _createNewHandler();
         _renderNickNames();
         _renderBoard();
+        _setDefaultColorPanel();
       }
       return { renderNewGame };
     })(gameBoard);
