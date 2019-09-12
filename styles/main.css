@@ -5,7 +5,7 @@
 body {
   min-height: 100vh;
   font-family: comic;
-  background-color: rgb(42, 22, 43);
+  background-color: rgb(57, 32, 58);
 }
 * {
   box-sizing: border-box;
@@ -19,12 +19,12 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(22, 5, 22);
+  background-color: rgb(37, 9, 37);
 }
 header h1 {
   font-size: 60px;
-  color: rgb(125, 89, 192);
-  text-shadow: 2px 2px rgb(68, 233, 63);
+  color: rgb(222, 213, 238);
+  text-shadow: 0px 10px black;
 }
 
 /* game */
@@ -59,22 +59,27 @@ header h1 {
   grid-template: repeat(3, 100px) / repeat(3, 100px);
 }
 .board-wrapper {
-  background-color: rgb(1, 29, 19);
+  background-color: rgb(8, 61, 43);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 10px 20px rgb(22, 5, 22);
+  box-shadow: 0 0 15px 15px rgb(22, 5, 22);
   justify-self: center;
   align-self: center;
 }
 .content-element {
-  color: rgb(33, 46, 90);
-  background-color: rgb(122, 158, 216);
+  color: rgb(96, 130, 168);
+  text-shadow: 1px 2px rgb(0, 0, 0);
+  background: linear-gradient(rgb(52, 2, 65), rgb(4, 0, 5));
   display: grid;
   justify-content: center;
   align-content: center;
   font-size: 60px;
+  transition: 0.5s ease-in-out;
 }
 .content-element:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px 1px rgb(36, 6, 70);
   background-color: rgb(74, 126, 209);
   transition: 0.5s;
 }
@@ -84,13 +89,34 @@ header h1 {
   justify-items: center;
 }
 .player-info h3 {
+  text-shadow: 0 2px black;
+  color: rgb(122, 255, 211);
   align-self: center;
-  font-size: 44px;
+  font-size: 48px;
+}
+.player-info.first-pl,
+.player-info.second-pl {
+  border-radius: 20%;
+  border: 2px solid rgb(10, 99, 40);
+  box-shadow: 0 0 20px 10px rgb(22, 5, 22);
+  background-color: rgb(1, 71, 56);
+  transition: 1s;
 }
 .player-info.first-pl h4,
 .player-info.second-pl h4 {
   align-self: start;
   font-size: 28px;
+  text-shadow: 0 2px black;
+}
+.player-info.first-pl h4 {
+  color: rgb(60, 253, 76);
+}
+.player-info.second-pl h4 {
+  color: rgb(192, 97, 247);
+}
+.player-info.first-pl .ch,
+.player-info.second-pl .ch {
+  font-size: 80px;
 }
 /* options */
 .game-options {
@@ -108,10 +134,19 @@ header h1 {
   background-color: rgb(12, 129, 51);
   color: white;
   border: 0;
+  border-radius: 5px;
   font-family: inherit;
   font-size: 24px;
   width: 140px;
   height: 50px;
+  transition: 1s;
+}
+.game-options button:hover {
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 0 10px 1px rgb(36, 6, 70);
+  background-color: rgb(26, 153, 68);
+  border-radius: 20px;
 }
 /* modal */
 .modal-wrapper {
@@ -133,11 +168,23 @@ header h1 {
   background-color: rgba(85, 47, 121, 0.7);
   box-shadow: 0 0 1px 10px rgba(85, 62, 107, 0.7);
   transform: translateY(10vh);
+  animation: opaAppear 0.5s;
 }
+
+@keyframes opaAppear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .modal .title {
   font-size: 60px;
   color: white;
   text-align: center;
+  text-shadow: 0px 10px black;
 }
 /* game-mode modal */
 .modal.game-mode .content {
@@ -180,6 +227,7 @@ header h1 {
 }
 .modal.nicknames .content .element label {
   font-size: 24px;
+  text-shadow: 1px 1px rgb(0, 0, 0);
   color: white;
 }
 .modal.nicknames .content .element input {
@@ -213,6 +261,7 @@ header h1 {
 .modal.game-over .content .gg {
   padding: 5px;
   color: white;
+  text-shadow: 1px 1px black;
   word-break: break-all;
   text-align: center;
 }

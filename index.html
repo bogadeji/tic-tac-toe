@@ -19,6 +19,7 @@
         <div class="player-info first-pl">
           <h3>1stPl</h3>
           <h4 class="nick-name">Player1</h4>
+          <h4 class="ch">X</h4>
         </div>
         <div class="board-wrapper">
           <div class="game-board">
@@ -36,6 +37,7 @@
         <div class="player-info second-pl">
           <h3>2ndPl</h3>
           <h4 class="nick-name">Player2</h4>
+          <h4 class="ch">O</h4>
         </div>
       </div>
 
@@ -63,11 +65,21 @@
         <div class="content">
           <div class="element first-player-input">
             <label for="first-player-nickname">1stPlayer</label>
-            <input type="text" id="first-player-nickname" />
+            <input
+              type="text"
+              id="first-player-nickname"
+              placeholder="Player1"
+              maxlength="18"
+            />
           </div>
           <div class="element second-player-input">
             <label for="second-player-nickname">2ndPlayer</label>
-            <input type="text" id="second-player-nickname" />
+            <input
+              type="text"
+              id="second-player-nickname"
+              placeholder="Player2"
+              maxlength="18"
+            />
           </div>
           <div class="modal-options">
             <button class="button back">Back</button>
@@ -81,9 +93,7 @@
       <div class="modal game-over">
         <h2 class="title">Game Over</h2>
         <div class="content">
-          <h2 class="gg">
-            <span class="winner">1stPlayer</span> wins the game!
-          </h2>
+          <h2 class="gg"></h2>
           <div class="modal-options">
             <button class="button new-game">New Game</button>
             <button class="button reset-game">Reset</button>
