@@ -232,6 +232,7 @@ header h1 {
 }
 .modal.nicknames .content .element input {
   font-family: inherit;
+  border: 1px solid rgb(157, 74, 235);
   color: white;
   background-color: blueviolet;
   font-size: 24px;
@@ -286,4 +287,65 @@ header h1 {
 .modal.game-over .content .modal-options .button:hover {
   background-color: rgb(157, 74, 235);
   width: 220px;
+}
+
+@media only screen and (max-width: 1180px) {
+  .player-info h3 {
+    font-size: 20px;
+  }
+  .player-info {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .game-wrapper {
+    margin: 0;
+    margin-top: 10vh;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .modal {
+    width: 320px;
+    height: 400px;
+  }
+  .player-info {
+    width: 60%;
+    margin: 0 auto;
+  }
+  .modal.game-mode .content .button {
+    font-size: 24px;
+    width: 200px;
+    height: 40px;
+  }
+  .modal.game-mode .content .button:hover {
+    width: 220px;
+  }
+  .modal.nicknames .content .element input {
+    width: 200px;
+    align-self: center;
+  }
+  .modal.nicknames .content .modal-options .button:hover {
+    width: 60px;
+  }
+  .game {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+  }
+  .player-info h3 {
+    font-size: 24px;
+  }
+  .player-info.first-pl .ch,
+  .player-info.second-pl .ch {
+    font-size: 75px;
+  }
+  .game-options button {
+    font-size: 16px;
+  }
+  .modal.game-over .content .modal-options .button {
+    font-size: 18px;
+    height: 32px;
+  }
+  header h1 {
+    font-size: 36px;
+  }
 }
